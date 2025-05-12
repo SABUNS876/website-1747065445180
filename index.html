@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Ciuman Ama Elaina</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap');
+  body {
+    margin: 0;
+    background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+  }
+  h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 3rem;
+    color: #d43f57;
+    margin-bottom: 10px;
+    text-align: center;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+  }
+  h2 {
+    font-weight: 700;
+    font-size: 1.6rem;
+    margin-bottom: 10px;
+    color: #7b2a3a;
+    text-align: center;
+  }
+  #chatbox {
+    width: 100%;
+    max-width: 400px;
+    height: 320px;
+    background: #fff0f4;
+    border-radius: 15px;
+    box-shadow: 0 8px 15px rgba(212, 63, 87, 0.3);
+    overflow-y: auto;
+    padding: 15px;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+  }
+  .message {
+    margin-bottom: 12px;
+    padding: 8px 12px;
+    border-radius: 15px;
+    max-width: 80%;
+    word-wrap: break-word;
+    font-size: 1rem;
+  }
+  .user {
+    background-color: #ff6b81;
+    color: white;
+    align-self: flex-end;
+    border-bottom-right-radius: 0;
+  }
+  .elaina {
+    background-color: #fcd1d8;
+    color: #7b2a3a;
+    align-self: flex-start;
+    border-bottom-left-radius: 0;
+  }
+  form {
+    display: flex;
+    width: 100%;
+    max-width: 400px;
+  }
+  input[type="text"] {
+    flex: 1;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 25px 0 0 25px;
+    font-size: 1rem;
+  }
+  button {
+    background-color: #d43f57;
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 0 25px 25px 0;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button:hover {
+    background-color: #a02c39;
+  }
+  #marryBtn {
+    background-color: #7ac70c;
+    border: none;
+    border-radius: 30px;
+    color: white;
+    padding: 15px 30px;
+    font-size: 1.4rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0 5px 12px rgba(122, 199, 12, 0.5);
+  }
+  #marryBtn:hover {
+    background-color: #5a9308;
+  }
+  @media (max-width: 400px) {
+    body {
+      padding: 10px;
+    }
+    h1 {
+      font-size: 2.4rem;
+    }
+    #chatbox {
+      height: 250px;
+    }
+    button, input[type="text"], #marryBtn {
+      font-size: 1rem;
+      padding: 10px;
+    }
+  }
+</style>
+</head>
+<body>
+  <h1>Ciuman Ama Elaina</h1>
+  <h2>Chat an Ama Elaina</h2>
+  <div id="chatbox" aria-live="polite" aria-atomic="false" role="log"></div>
+  <form id="chatForm" autocomplete="off" aria-label="Chat input form">
+    <input id="chatInput" type="text" placeholder="Kirim pesan untuk Elaina..." aria-label="Ketik pesan" required />
+    <button type="submit" aria-label="Kirim pesan">Kirim</button>
+  </form>
+  <button id="marryBtn" aria-label="Tombol untuk nikahi Elaina">Bisa Nikahin Elaina</button>
+
+<script>
+  const chatbox = document.getElementById('chatbox');
+  const form = document.getElementById('chatForm');
+  const input = document.getElementById('chatInput');
+  const marryBtn = document.getElementById('marryBtn');
+
+  // Fixed predefined responses from Elaina
+  const elainaResponses = [
+    "Hai! Aku Elaina, senang bisa chat sama kamu.",
+    "Ciuman kamu membuat aku tersenyum :)",
+    "Kamu selalu di hatiku, jangan lupa ya!",
+    "Aku juga ingin nikah sama kamu suatu hari nanti.",
+    "Terima kasih sudah membuat hari aku lebih cerah!",
+    "Kamu siapa yang aku tunggu-tunggu setiap hari!",
+    "Kirim ciuman lagi dong!",
+    "Aku sayang kamu."
+  ];
+
+  function appendMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('message', sender);
+    msgDiv.textContent = text;
+    chatbox.appendChild(msgDiv);
+    chatbox.scrollTop = chatbox.scrollHeight;
+  }
+
+  function getRandomElainaResponse() {
+    return elainaResponses[Math.floor(Math.random() * elainaResponses.length)];
+  }
+
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const userMessage = input.value.trim();
+    if (!userMessage) return;
+    appendMessage(userMessage, 'user');
+    input.value = '';
+
+    setTimeout(() => {
+      const response = getRandomElainaResponse();
+      appendMessage(response, 'elaina');
+    }, 700);
+  });
+
+  marryBtn.addEventListener('click', () => {
+    appendMessage("Ayo kita nikah! ❤️🎉", 'elaina');
+    marryBtn.disabled = true;
+    marryBtn.textContent = "Sudah Nikah dengan Elaina";
+    marryBtn.style.backgroundColor = '#555';
+    marryBtn.style.cursor = 'default';
+  });
+
+  // Initial greeting from Elaina
+  appendMessage("Halo, aku Elaina. Yuk, ngobrol!", 'elaina');
+</script>
+</body>
+</html>
+
+```
